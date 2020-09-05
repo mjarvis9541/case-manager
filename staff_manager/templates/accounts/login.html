@@ -1,0 +1,23 @@
+{% extends 'basenonav.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<h1 class="text-center mt-5 mb-5">Case Manager</h1>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Log in</h2>
+                <hr class="mt-4 mb-4">
+                <form action="" method="POST"> {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="form-group mt-5">
+                        <button class="btn btn-primary btn-block " type="submit">Log in</button>
+                    </div>
+                </form>
+  
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

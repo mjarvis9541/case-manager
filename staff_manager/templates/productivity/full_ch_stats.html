@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="card">
+    <div class="card-body">
+        <h1>Case Handler Current Stats</h1>
+        <p>Live productivity report per case handler</p>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-sm-4">
+
+
+                <table class="table  table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%;">User ID</th>
+                            <th class="text-center">Minutes Today</th>
+                        </tr>
+                    </thead>
+                    {% for key, value in day.items %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td class="text-center">{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-sm-2">
+
+                <table class="table  table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+
+                            <th class="text-center">Minutes This Week</th>
+                        </tr>
+                    </thead>
+                    {% for key, value in week.items %}
+                    <tr>
+                        <td class="text-center">{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+
+            <div class="col-sm-6">
+
+                <table class="table  table-bordered table-striped table-hover">
+                    <tbody>
+                        <thead>
+                            <tr>
+                                <th>Staff Id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Dept.</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        {% for object in user_list %}
+                        <tr>
+                            <td><a href="{% url 'prod:tmview' object.id %}">{{ object.username }}</a></td>
+                            <td>{{ object.first_name }}</td>
+                            <td>{{ object.last_name }}</td>
+                            <td>{{ object.department.name }}</td>
+                            <td>{{ object.email|truncatechars:"18" }}</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    {% endblock content %}

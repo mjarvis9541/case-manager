@@ -1,0 +1,85 @@
+User.objects.filter(created_by_user__date='2020-09-05').aggregate(total=Coalesce(Sum('created_by_user__case_type__minutes'),0))['total']
+
+User.objects.filter(created_by_user__date='2020-09-05')
+
+
+In [18]: User.objects.filter(id=1, user_case__date='2020-09-05')
+
+
+
+
+In [32]: User.objects.filter(id=3, user_case__date='2020-09-01').aggregate(total=Coalesce(Sum('user_case__case_type__minutes'),0))['total']
+Out[32]: 0.0
+
+In [33]: User.objects.filter(id=3, user_case__date='2020-09-01').aggregate(total=Coalesce(Sum('user_case__case_type__minutes'),0))['total']
+Out[33]: 3.0
+
+
+    def mins(self):
+        return self.annotate(
+            mins=F('user_case__case_type__minutes').aggregate(total=Sum('mins'))['total']
+        )
+
+
+    def total(self):
+        return round(self.select_related('case_type').aggregate(total=Coalesce(Sum('case_type__minutes'),0))['total'],1)
+
+
+
+
+
+In [32]: data_for_template = []
+    ...: for ch in User.objects.all():
+    ...:     print(ch.username)
+    ...:     print(User.query.filter(id=ch.id).total_mins_today())
+    ...: 
+FS0001
+111.5
+FS0002
+0.0
+FS0003
+435.0
+FS0004
+0.0
+FS0005
+15.0
+FS0006
+0.0
+FS0007
+27.5
+FS0008
+150.0
+FS0009
+0.0
+FS0010
+3.0
+FS1111
+0.0
+FS1112
+0.0
+
+    object_list = Case.objects.all().order_by('-date', '-date_modified')
+    q = request.GET.get("q")
+    if q:
+        object_list = object_list.filter(
+            Q(date__icontains=q)
+            | Q(user__username__icontains=q)
+            | Q(case_type__name__icontains=q)
+            | Q(case_ref__icontains=q)
+        )  # .distinct()
+
+    # total case count
+    total_idv_count = object_list.filter(case_type__name='IDV Proof').aggregate(casecount=Count('case_type__name'))['casecount']
+    total_ff_count = object_list.filter(case_type__name='Final Final').aggregate(casecount=Count('case_type__name'))['casecount']
+    total_ffs_count = object_list.filter(case_type__name='Final Final Shell').aggregate(casecount=Count('case_type__name'))['casecount']
+    total_reclass_count = object_list.filter(case_type__name='Reclassified').aggregate(casecount=Count('case_type__name'))['casecount']
+    total_count = object_list.aggregate(casecount=Count('case_type__name'))['casecount']
+
+    # total mins sum
+    total_idv_mins = object_list.filter(case_type__name='IDV Proof').aggregate(mins=Sum('case_type__minutes'))['mins']
+    total_ff_mins = object_list.filter(case_type__name='Final Final').aggregate(mins=Sum('case_type__minutes'))['mins']
+    total_ffs_mins = object_list.filter(case_type__name='Final Final Shell').aggregate(mins=Sum('case_type__minutes'))['mins']
+    total_reclass_mins = object_list.filter(case_type__name='Reclassified').aggregate(mins=Sum('case_type__minutes'))['mins']
+    total_mins = object_list.aggregate(mins=Sum('case_type__minutes'))['mins']
+    # Search query - can search by the below parameters
+

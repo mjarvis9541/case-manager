@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="card">
+    <div class="card-body">
+        <h1>Case Type Detail - {{ object.name }}</h1>
+        <hr>
+        <p>{% if object.description %}{{ object.description }}{% else %}{% endif %}</p>
+        <br>
+        <table class="table table-bordered">
+            <tr>
+                <th>Name:</th>
+                <td>{{ object.name }}</td>
+            </tr>
+            <tr>
+                <th>Minute Value:</th>
+                <td>{{ object.minutes}}</td>
+            </tr>
+            <tr>
+                <th>Created By:</th>
+                <td>{{ object.created_by }}</td>
+            </tr>
+            <tr>
+                <th>Date Created:</th>
+                <td>{{ object.date_created }}</td>
+            </tr>
+            <tr>
+                <th>Modified By:</th>
+                <td>{{ object.modified_by }}</td>
+            </tr>
+            <tr>
+                <th>Date Modified:</th>
+                <td>{{ object.date_modified}}</td>
+            </tr>
+        </table>
+        <br>
+        <a class="btn btn-secondary" href="{% url 'prod:casetype_update' object.id %}" role="button">Edit</a>
+        <a class="btn btn-danger" href="{% url 'prod:casetype_delete' object.id %}" role="button">Delete</a>
+
+
+    </div>
+</div>
+{% endblock content %}

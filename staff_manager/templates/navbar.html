@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+<div class="container">
+    <a class="navbar-brand" href="{% url 'prod:list' %}"> <strong>Case Manager</strong></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'prod:list' %}">Case Log</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="">Timesheet</a>
+        </li>
+{% if request.user.is_staff %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'prod:teamlist' %}">Team View(TM)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'prod:full-case-list' %}">Operational View(OM)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'prod:sitemap' %}">Development(MI/IT)</a>
+          </li>
+     
+      {% endif %}
+    </ul>
+      {% if user.is_authenticated %}
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link mr-2" href="">User: {{ request.user }}</a>
+          </li>
+      </ul>
+      <form class="form-inline mt-2 mt-md-0 " action="{% url 'accounts:logout' %}" method="POST"> {% csrf_token %}
+        <button class="btn btn-secondary btn-sm my-2 my-sm-0 width80" type="submit">Log out</button>
+      </form>
+
+      {% else %}
+
+      <form class="form-inline mt-2 mt-md-0">
+        <a class="btn btn-secondary btn-sm my-2 my-sm-0 width80" href="{% url 'accounts:login' %}" role="button">Log in</a>
+      </form>
+
+
+      {% endif %}
+    </div>
+</div>
+  </nav>

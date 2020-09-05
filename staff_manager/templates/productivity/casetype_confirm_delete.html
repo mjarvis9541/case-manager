@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="card">
+    <div class="card-body">
+        <h1>Case Type Delete</h1>
+        <hr>
+        <form action="" method="POST"> {% csrf_token %}
+            <fieldset class="form-group">
+                <p>Are you sure you want to delete <strong>{{ object.name }}</strong> - worth <strong> {{ object.minutes }}</strong> minutes?</p>
+                <p>This action cannot be undone.</p>
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">Delete</button>
+                <a class="btn btn-secondary" href="{% url 'prod:casetype_list' %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

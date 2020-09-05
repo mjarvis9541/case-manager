@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <h1>Team List</h1>
+                <p>A list of all staff -- Click staff ID to view individual team members productivity for this week.</p>
+
+                <br>
+        <!-- SEARCH BAR -->
+        <form>
+            <div class="input-group mt-4 mb-3">
+                <input type="search" name="q" class="form-control" placeholder="Search" value="{{ request.GET.q }}"
+                    aria-label="Seach" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+        <p><a href="{% url 'prod:teamlist' %}">Clear Search</a></p>
+     
+                <table class="table table-sm table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Staff Id</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Team Manager</th>
+                            <th>Ops Manager</th>
+                            <th>Prod Today</th>
+                            <th>Prod Week</th>
+                        </tr>
+                    </thead>
+
+
+
+                    <tbody>
+                        {% for object in object_list %}
+                        <tr>
+                            <td><a href="{% url 'prod:tmview' object.id %}">{{ object.username }}</a></td>
+                            <td>{{ object.first_name }}</td>
+                            <td>{{ object.last_name }}</td>
+                            <td>{{ object.email }}</td>
+                            <td>{{ object.department.name }}</td>
+                            <td>[ tl name ]</td>
+                            <td>[ ops name]</td>
+                            <td> </td>
+                            <td>[ week ]</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+
+            </div>
+        </div>
+
+<table>
+    
+    </table>
+
+        {% endblock content %}

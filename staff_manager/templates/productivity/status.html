@@ -1,0 +1,23 @@
+<!-- Date / User / Last login -->
+
+<h2>Today's Log in</h2>
+<div class="row mt-4">
+    <div class="col-sm-6">
+        <table class="table table-sm table-bordered">
+        <tr>
+            <th>Today:</th>
+            <td>{{ today }}</td>
+        </tr>
+
+            <tr>
+            <th>User:</th>
+            <td>{{ request.user }}</td>
+        </tr>
+        <tr>
+            <th>Last login:</th>
+            <td>{{ request.user.last_login }}</td>
+        </tr>
+        </table>
+    </div>
+</div>
+<hr>

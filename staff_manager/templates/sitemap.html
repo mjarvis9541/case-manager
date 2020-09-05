@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="card">
+    <div class="card-body">
+        <h1>Sitemap / Project Roadmap</h1>
+        <p>An administrative overview of the site to show all the features, links, act as a roadmap and documentation of what's in development.</p>
+        <hr><br>
+        <h2>Operation Manager <small>[in progress]</small></h2>
+        <p>Overview of the operation, live as cases are logged.</p>
+        <p><a href="{% url 'prod:full-case-list' %}">Operational Stats - shows list of all the cases as they're completed
+                live</a></p>
+            <p>
+                <a href="{% url 'prod:ch_stats' %}">Case Handler Stats</a>
+            </p>
+        <strong>New:</strong>
+        <p>Case handler daily target % view - list of ch with their target for far for today</p>
+        <p>Case handler weekly target % view - list of ch with their target so far for the week (minus today)</p>
+        <p>Case handler weekly target % view - list of ch with their target so far for the week (including today)</p>
+        <br>
+
+
+        <h2>Team Manager</h2>
+        <p>Views for team leaders to manage their teams, stats, log in times, log out times (to be added).</p>
+        <p><a href="{% url 'prod:teamlist' %}">Team List</a> - view a list of current CHs on a per team basis, with links to their individual case logs. Each team leader will be able to see reports and live updates on each of their team members and only their members (to be implemented)</a></p>
+        <br>
+
+            
+        <h2>Staff Manager <small>[in progress]</small></h2>
+        <p>Add new staff to the application - set their deparment - set their team leader - set permissions and staff statuses.</p>
+        <p><a href="">View user/staff member list</a> - View a list of all the current users registered in Case Manager (should be able migrate everyone over)</p>
+        <p><a href="">Create user/staff member</a> - Use this link to create a new user/add them to Case Manager</p>
+        <p><a href="">Coming Soon</a></p>
+        <p><a href="">Coming Soon</a></p>
+<br>
+        <h2>Export Views (running csv reports)</h2>
+        <p>Views for exporting reports to CSV files/excel files/pdfs - direct links will start a download of the given report, will be able to
+            filter reports</p>
+        <p><a href="{% url 'prod:export' %}">Prod Export - all case log data as csv (downloads data as .csv file)</a>
+        <p><a href="{% url 'prod:case_type_export' %}">Case Type Export - download all stored case types and their minute-value-related data (downloads data as .csv file)</a></p>
+
+        <p><a href="">Department Export - download all stored department-related data to .csv (downloads data as .csv file)</a></p>
+        <p><a href="{% url 'accounts:export' %}">User Export - all user account data as csv (downloads data as .csv
+                file)</a></p>
+<br><br>
+
+        <h2>Case Types <small>[Complete]</small></h2>
+        <p>Views to CREATE, RETREIVE, UPDATE and DELETE (CRUD) for creating new case types and setting their case value. (For example ID Proofs are currently worth 15 mins - you can change the minute value for the cases here - you can also create new case types such as 'PPI/No PPI' etc...)</p>
+
+        <p><a href="{% url 'prod:casetype_list' %}">Case type list view</a> - view a list of case types</p>
+        <p>Within this view:</p>
+        
+        <li>Case Type create - create a new case type (PPI, No PPI, IDV Fail, etc.) and assign minute value</li>
+        <li>Case Type detail - view the details of a case type type</li>
+        <li>Case Type update - update a case type (name, minute value</li>
+        <li>Case Type delete - delete a case type</li>
+ 
+       <br><br>
+
+
+       <h2>Departments</h2>
+       <p>Manage departmentental data Triage/Calcs/QAs/Management team/Cleaners (joke..) etc </p>
+
+       <p><a href="">Department List</a></p>
+       <p><a href="">Create Department</a></p>
+       <p><a href="">Department Details</a></p>
+       <p><a href="">Update Dep</a></p>
+       <p><a href="">Delete Department</a></p>
+       
+
+      <br><br>
+
+    </div>
+</div>
+{% endblock content %}

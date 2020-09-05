@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="card">
+    <div class="card-body">
+
+        <table class="table table-sm table-bordered table-striped">
+            <thead>
+                <th>Staff Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Team Manager</th>
+                <th>Ops Manager</th>
+
+            </thead>
+
+            {% for object in object_list%}
+            <tr>
+                <td><a href="">{{ object.username }}</a></td>
+                <td>{{ object.first_name }}</td>
+                <td>{{ object.last_name }}</td>
+                <td>{{ object.email }}</td>
+                <td><td>
+
+                </td></td>
+
+
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock content %}

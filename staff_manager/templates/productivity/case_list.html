@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6 mb-4">
+                <h1>Case Log</h1>
+                <p>Record cases worked today below.</p>
+                <hr>
+                <form action="" method="POST"> {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+
+            <div class="col-sm-6">
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th class="text-center"> <strong style="font-size: 1.3rem">{{ today|date:"" }}</strong></th>
+                        
+                        <th style="width: 50%;" class="text-center"> <strong style="font-size: 1.3rem">Week
+                                {{ week_number }}</strong></th>
+                    </tr>
+                </table>
+
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width: 50%;">User ID:</th>
+                        <td>{{ user }}</td>
+                    </tr>
+                    <tr>
+                        <th>Name:</th>
+                        <td>{{ user.first_name }} {{ user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Last Login:</th>
+                        <td>{{ user.last_login }}</td>
+                    </tr>
+
+                </table>
+                <table class="table table-bordered text-center">
+                    <thead>
+
+                    </thead>
+                    <tr>
+                        <th class="text-left" style="width: 50%;">Prod Today:</th>
+                        <td style="width: 25%;">{{ object_list.total }} mins</td>
+                        <td class="text-center">{{ object_list.total_pct }} %</td>
+                    </tr>
+
+                </table>
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th class="text-left" style="width: 50%;">Prod This Week:</th>
+                        <td class="text-center" style="width: 25%;">{{ weektotal.total }} mins</td>
+                        <td class="text-center">{{ weektotal.total_pct }} %</td>
+                    </tr>
+
+                </table>
+                <table class="table table-bordered text-center">
+                    <tr>
+                        <th class="text-left" style="width: 50%;">Overproduction:</th>
+                        <td  style="width: 25%;">0.0 mins</td>
+                        <td>0.0 %</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+     
+
+
+        <br><br><br>
+
+        <table class="table table-sm table-bordered table-striped">
+            <thead>
+                <th style="width: 12.5%;">CET Reference</th>
+                <th style="width: 12.5%;">Case Type</th>
+                <th class="text-center" style="width: 10%;">Mins</th>
+                <th class="text-left" style="width: 35%;">Case Notes</th>
+                <th class="text-center" style="width: 10%;">Date Added</th>
+                <th class="text-center" style="width: 10%;">Time Added</th>
+                <th style="width: 8%;"></th>
+            </thead>
+
+            {% for object in weektotal %}
+            <tr>
+                <td>{{ object.case_ref }}</td>
+                <td>{{ object.case_type }}</td>
+                <td class="text-center">{{ object.case_type.minutes }}</td>
+                <td>{% if object.note %}{{ object.note|truncatechars:45 }}{% else %} {% endif %}</td>
+                <td class="text-center">{{ object.date|date:"" }}</td>
+                <td class="text-center">{{ object.date_created|time:"H:i:s" }}</td>
+                <td class="text-center"><a href="{% url 'prod:delete' object.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+    </div>
+</div>
+
+
+
+{% endblock content %}
