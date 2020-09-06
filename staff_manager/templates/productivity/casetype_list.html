@@ -7,9 +7,8 @@
         <p>A list of all case types with their associated minute-value. Data also shown for when the case type was added
             to the
             database, when it was last modified, who added it to the database and who last modified it.</p>
-        <hr>
-
-
+     
+        <h2>Search/Filter: <small class=text-muted>[ Department ] [ Task ] [ Minute Value ] </small> </h2>
         <!-- SEARCH BAR -->
         <form>
             <div class="input-group mt-4 mb-3">
@@ -23,14 +22,14 @@
 
         <p><a href="{% url 'prod:casetype_list' %}">Clear Search</a></p>
         <br>
-        <p><a class="btn btn-primary" href="{% url 'prod:casetype_create' %}" role="button">Create New Case Type</a></p>
+        <p><a class="btn btn-primary" href="{% url 'prod:casetype_create' %}" role="button">Create New Task</a></p>
 
 
         <table class="table table-sm table-hover table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Department</th>
-                    <th>Case Type</th>
+                    <th>Task</th>
                     <th>Minute Value</th>
                     <th>Description</th>
                     <!-- <th>Date Created</th>

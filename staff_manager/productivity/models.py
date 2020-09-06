@@ -51,7 +51,7 @@ class Case(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_case')
     date = models.DateField(default=timezone.now, help_text="Date the case handler worked and claimed for the case. Shown as the 'date added' field on the case log.")
     case_type = models.ForeignKey(CaseType, on_delete=models.CASCADE, verbose_name='Case Type')
-    case_ref = models.CharField('CET Reference', max_length=12)
+    case_ref = models.CharField('CET Reference', max_length=24)
     note = models.CharField('Notes', max_length=50, blank=True, null=True)
     date_created = models.DateTimeField(auto_now_add=True) # help_text="Date the case was originally added to case log.")
     date_modified = models.DateTimeField(auto_now=True) # help_text="Date will be differ to 'date created' if the case date, type or reference has been modified since insertion.")
@@ -69,6 +69,6 @@ class Case(models.Model):
         # ]
 
     def __str__(self):
-        return self.user.username
+        return self.case_ref
 
     

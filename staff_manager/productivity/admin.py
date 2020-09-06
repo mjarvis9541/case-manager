@@ -7,7 +7,15 @@ class DepartmentAdmin(admin.ModelAdmin):
     #readonly_fields = ['date_created', 'date_modified']
 
 class CaseAdmin(admin.ModelAdmin):
-    list_display = [f.name for f in Case._meta.fields if f.name != 'id']
+    list_display = [
+        'case_ref',
+        'case_type',
+        'date',
+        'user',
+        'note',
+        'date_created',
+        'date_modified',
+    ]
     readonly_fields = ['date_created', 'date_modified']
 
 

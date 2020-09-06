@@ -8,8 +8,9 @@
             <div class="col">
                 <h1>Team List</h1>
                 <p>A list of all staff -- Click staff ID to view individual team members productivity for this week.</p>
-
-                <br>
+         
+              <br>
+              <h2>Search: <small class=text-muted>[ Staff ID ] [ First name ] [ Last name ] </small> </h2>
         <!-- SEARCH BAR -->
         <form>
             <div class="input-group mt-4 mb-3">
@@ -22,41 +23,47 @@
         </form>
         <p><a href="{% url 'prod:teamlist' %}">Clear Search</a></p>
      
-                <table class="table table-sm table-bordered table-striped">
-                    <thead>
+        <div class="table-responsive">
+                <table class="table table-sm table-bordered text-nowrap table-hover table-striped">
+                    <thead class="text-nowrap">
                         <tr>
-                            <th>Staff Id</th>
+                            <th>Staff ID</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Department</th>
-                            <th>Team Manager</th>
+                            <!-- <th>Team Manager</th>
                             <th>Ops Manager</th>
                             <th>Prod Today</th>
-                            <th>Prod Week</th>
+                            <th>Prod Week</th> -->
+                            <th>Prod/Today</th>
+                            <th>Prod/Week</th>
+                            <th>Sign In</th>
+                            <th>Sign Out</th>
+                            <th>Last Case Ref</th>
+                            <th>Last Case Time</th>
                         </tr>
                     </thead>
-
-
-
                     <tbody>
                         {% for object in object_list %}
                         <tr>
                             <td><a href="{% url 'prod:tmview' object.id %}">{{ object.username }}</a></td>
                             <td>{{ object.first_name }}</td>
                             <td>{{ object.last_name }}</td>
-                            <td>{{ object.email }}</td>
+                            <td>{{ object.email|truncatechars:"15" }}</td>
                             <td>{{ object.department.name }}</td>
-                            <td>[ tl name ]</td>
-                            <td>[ ops name]</td>
-                            <td> </td>
-                            <td>[ week ]</td>
+                            <td>{{ object.total_prod }}</td>
+                            <td>{{ object.total_week }}</td>
+                            <td>{{ object.last_login|date:"H:i, d/m/y" }}</td>
+                            <td>[ time ]</td>
+                            <td>{{ object.last_case_ref }}</td>
+                            <td>{% if object.last_case %}{{ object.last_case|date:"H:i, d/m/y" }}{% else %}{{ object.last_case }}{% endif %}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
 
                 </table>
-
+            </div>
 
             </div>
         </div>

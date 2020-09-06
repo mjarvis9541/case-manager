@@ -7,11 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.contrib import messages
-from .forms import TriageCaseCreate, CaseUpdate, TmTriageCaseCreate, CaseTypeForm
+from .forms import TriageCaseCreate, CaseUpdate, TmTriageCaseCreate, CaseTypeForm, ExportForm
 from .models import Case, CaseType
 from django.core.paginator import Paginator
 from django.db.models import Q, Count, Avg, Max, Min, Sum, ExpressionWrapper, F, Func
-
+from django.db.models import ExpressionWrapper, F, Func, Q, Sum, OuterRef, Subquery
 from django.db.models.functions import Coalesce, Round, ExtractYear, ExtractWeek
 
 User = get_user_model()
@@ -116,7 +116,39 @@ Only TMs can update cases that have already been put on caseflow.
 @staff_member_required
 def team_list_view(request):
     today = timezone.now()
-    object_list = User.objects.all()
+    week_number = timezone.now().isocalendar()[1]
+    object_list = (
+        User.objects.all()
+        .annotate(
+            last_case=Subquery(
+                Case.objects.filter(user=OuterRef("pk"),).order_by('-date_created').values(
+                    "date_created"
+                )[:1]
+            )
+        )
+        .annotate(
+            last_case_ref=Subquery(
+                Case.objects.filter(user=OuterRef("pk"),).order_by('-date_created').values(
+                    "case_ref"
+                )[:1]
+            )
+        )
+
+        # Getting the user object -
+        .annotate(
+            total_prod=Subquery(
+                Case.objects.filter(user=OuterRef("pk"), date=today).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+            .annotate(
+            total_week=Subquery(
+                Case.objects.filter(user=OuterRef("pk"), date__week=week_number).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+            )
+        
+    
+
 
     q = request.GET.get("q")
     if q:
@@ -127,7 +159,7 @@ def team_list_view(request):
             | Q(last_name__icontains=q)
         )  # .distinct()
 
-    paginator = Paginator(object_list, 100)
+    paginator = Paginator(object_list, 50)
     page = request.GET.get("page")
     object_list = paginator.get_page(page)
 
@@ -201,6 +233,7 @@ def case_update_view(request, pk=None):
 @login_required
 @staff_member_required
 def csv_export(request):
+
     response = HttpResponse(content_type='text/csv')   
     writer = csv.writer(response)
     writer.writerow(['user', 'date_claimed', 'case_type', 'case_ref', 'note', 'date_added', 'date_modified'])
@@ -246,7 +279,8 @@ def site_map_view(request):
 @staff_member_required
 def full_case_list_view(request):
 
-    object_list = Case.objects.all().order_by('-date', '-date_modified')
+### CHANGED TO USE SELECT RELATED!!!
+    object_list = Case.objects.all().select_related('case_type').order_by('-date', '-date_modified')
     q = request.GET.get("q")
     if q:
         object_list = object_list.filter(
@@ -272,7 +306,7 @@ def full_case_list_view(request):
     # Search query - can search by the below parameters
 
 
-    paginator = Paginator(object_list, 100)
+    paginator = Paginator(object_list, 50)
     page = request.GET.get("page")
     object_list = paginator.get_page(page)
 
@@ -415,4 +449,18 @@ def casetype_delete_view(request, pk):
 
 
 
+        
 
+def export_list_view(request):
+    form = ExportForm(request.POST or None)
+    download_form = None
+
+    if request.method =='POST':
+        
+        if form.is_valid():
+            pass
+    context ={
+        'form': form,
+        'download_form': download_form,
+    }
+    return render(request, 'productivity/reports.html', context)

@@ -45,6 +45,7 @@ urlpatterns = [
     # path('department-update/<int:pk>/', views.department_update_view, name='department_update'),
     # path('department-delete/<int:pk>/', views.department_delete_view, name='department_delete'),
 
+    path('reports/', views.export_list_view, name='export_list'),
 
 
 

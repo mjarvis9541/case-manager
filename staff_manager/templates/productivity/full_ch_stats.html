@@ -4,10 +4,25 @@
 
 <div class="card">
     <div class="card-body">
-        <h1>Case Handler Current Stats</h1>
-        <p>Live productivity report per case handler</p>
+
+        <div class="row">
+            <div class="col-8">
+                <h1>Productivity Report</h1>
+                <p>A senior manager view to oversee productivity of individual case handlers in real-time.</p>
+                <br>
+            </div>
+
+            <div class="col-4">
+
+                <table class="table table-bordered text-center">
+                    <td><a href="{% url 'prod:full-case-list' %}" style="font-size: 1.5rem"> <strong>Operational View </strong></a></td>
+                </table>
+          
+            </div>
+   
+       
+        </div>
         <hr>
-        <br>
         <div class="row">
             <div class="col-sm-4">
 
@@ -33,7 +48,7 @@
                     <thead>
                         <tr>
 
-                            <th class="text-center">Minutes This Week</th>
+                            <th class="text-center">This Week</th>
                         </tr>
                     </thead>
                     {% for key, value in week.items %}
@@ -45,9 +60,9 @@
 
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-6 table-responsive">
 
-                <table class="table  table-bordered table-striped table-hover">
+                <table class="table table-bordered table-striped table-hover">
                     <tbody>
                         <thead>
                             <tr>

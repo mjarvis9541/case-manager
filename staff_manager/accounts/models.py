@@ -7,8 +7,10 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 from staff_manager.productivity.models import Department
 
-from django.db.models import ExpressionWrapper, F, Func, Q, Sum
+from django.db.models import ExpressionWrapper, F, Func, Q, Sum, OuterRef, Subquery
 from django.db.models.functions import Coalesce, Round, ExtractYear, ExtractWeek
+
+from staff_manager.productivity.models import Case
 
 
 
@@ -35,6 +37,9 @@ class UserStats(models.QuerySet):
         return self.annotate(
             mins=F('user_case__case_type__minutes').aggregate(total=Sum('mins'))['total']
         )
+
+    def last_case(self):
+        return self.annotate(last_case=Subquery(Case.objects.filter(user=OuterRef('pk'),).values('case_ref')[:1]))
 
 
 
@@ -65,6 +70,16 @@ class UserManager(BaseUserManager):
         return self._create_user(username, password, True, True)
 
 
+    def get_queryset(self):
+        return UserStats(self.model, using=self._db)
+
+    def last_case(self):
+        return self.get_queryset().last_case()
+
+    # def last_case(self):
+    #     return self.annotate(last_case=Subquery(Case.objects.filter(user=OuterRef('pk'),).values('case_ref')[:1]))
+
+    
 class User(AbstractBaseUser, PermissionsMixin):
     """
     A fully featured User model with admin-compliant permissions that uses
