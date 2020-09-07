@@ -1,5 +1,6 @@
 
 import csv
+from django.contrib.postgres.search import SearchVector
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
@@ -7,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.contrib import messages
-from .forms import TriageCaseCreate, CaseUpdate, TmTriageCaseCreate, CaseTypeForm, ExportForm
+from .forms import TriageCaseCreate, CaseUpdate, TmTriageCaseCreate, CaseTypeForm, ExportForm, CalcCaseCreate
 from .models import Case, CaseType
 from django.core.paginator import Paginator
 from django.db.models import Q, Count, Avg, Max, Min, Sum, ExpressionWrapper, F, Func
@@ -28,15 +29,27 @@ def ch_case_list_view(request):
     cases = Case.objects.filter(user=user_, date=today).order_by('-date', '-date_modified')
     weektotal = Case.objects.filter(user=user_, date__week=week_number).order_by('-date', '-date_modified')
 
-    if request.method == 'POST':
-        form = TriageCaseCreate(request.POST, user=user_, date=today)
-        if form.is_valid():
-            form.instance.user = user_
-            form.save()
-            messages.success(request, f'{form.instance.case_ref} - {form.instance.case_type} has been added')
-            return redirect('prod:list')
+    if str(request.user.department) == 'Triage':
+        if request.method == 'POST':
+            form = TriageCaseCreate(request.POST, user=user_, date=today)
+            if form.is_valid():
+                form.instance.user = user_
+                form.save()
+                messages.success(request, f'{form.instance.case_ref} - {form.instance.case_type} has been added')
+                return redirect('prod:list')
+        else:
+            form = TriageCaseCreate(user=user_, date=today)
     else:
-        form = TriageCaseCreate(user=user_, date=today)
+        if request.method == 'POST':
+            form = CalcCaseCreate(request.POST, user=user_, date=today)
+            if form.is_valid():
+                form.instance.user = user_
+                form.save()
+                messages.success(request, f'{form.instance.case_ref} - {form.instance.case_type} has been added')
+                return redirect('prod:list')
+        else:
+            form = CalcCaseCreate(user=user_, date=today)
+    
 
     context = {
         'week_number': week_number,

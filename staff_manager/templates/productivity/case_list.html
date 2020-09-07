@@ -37,6 +37,11 @@
                         <td>{{ user.first_name }} {{ user.last_name }}</td>
                     </tr>
                     <tr>
+                        <th>Department:</th>
+                        <td>{{ user.department }}</td>
+                
+                    </tr>
+                    <tr>
                         <th>Last Login:</th>
                         <td>{{ user.last_login|date:" H:i:s, j M Y" }}</td>
                 
