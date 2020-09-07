@@ -9,7 +9,7 @@ class ExportForm(forms.Form):
 
 class TriageCaseCreate(forms.ModelForm):
     case_ref = forms.CharField(label='CET Reference', max_length=24, min_length=10) # max_length=10, min_length=10)
-    case_type = forms.ModelChoiceField(queryset=CaseType.objects.filter(department=1))#), empty_label='Select')
+    case_type = forms.ModelChoiceField(label='Case Type', queryset=CaseType.objects.filter(department=1))#), empty_label='Select')
 
     class Meta:
         model = Case
