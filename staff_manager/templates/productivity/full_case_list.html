@@ -117,9 +117,9 @@
                     <th style="width: 9%;">Reference</th>
                     <th style="width: 10%;">Case Type</th>
                     <th style="width: 5%;" class="text-center">Mins</th>
-                    <th style="width: 29%;">Case Handler Notes</th>
-                    <th style="width: 15%;" class="text-center">Date/Time Added</th>
-                    <th style="width: 15%;" class="text-center">Date/Time Updated</th>
+                    <th style="width: 43%;">Case Handler Notes</th>
+                    <th style="width: 8%;" class="text-center">Date Added</th>
+                    <th style="width: 8%;" class="text-center">Time Added</th>
                 </tr>
             </thead>
 
@@ -131,8 +131,8 @@
                 <td>{{ object.case_type }}</td>
                 <td class="text-center">{{ object.case_type.minutes }}</td>
                 <td>{% if object.note %}{{ object.note|truncatechars:25 }}{% else %} {% endif %}</td>
-                <td class="text-center">{{ object.date_created }}</td>
-                <td class="text-center">{{ object.date_modified }}</td>
+                <td class="text-center">{{ object.date_created|date:"" }}</td>
+                <td class="text-center">{{ object.date_created|time:"H:i:s" }}</td>
             </tr>
             {% endfor %}
         </table>

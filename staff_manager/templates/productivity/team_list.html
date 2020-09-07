@@ -38,8 +38,8 @@
                             <th>Prod Week</th> -->
                             <th>Prod/Today</th>
                             <th>Prod/Week</th>
-                            <th>Sign In</th>
-                            <th>Sign Out</th>
+                            <th>Last Log In</th>
+                            <th>Log Out</th>
                             <th>Last Case Ref</th>
                             <th>Last Case Time</th>
                         </tr>
@@ -54,7 +54,7 @@
                             <td>{{ object.department.name }}</td>
                             <td>{{ object.total_prod }}</td>
                             <td>{{ object.total_week }}</td>
-                            <td>{{ object.last_login|date:"H:i, d/m/y" }}</td>
+                            <td>{% if object.last_login %}{{ object.last_login|date:"H:i, d/m/y" }}{% else %}{{ object.last_login }}{% endif %}</td>
                             <td>[ time ]</td>
                             <td>{{ object.last_case_ref }}</td>
                             <td>{% if object.last_case %}{{ object.last_case|date:"H:i, d/m/y" }}{% else %}{{ object.last_case }}{% endif %}</td>
