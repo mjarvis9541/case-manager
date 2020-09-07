@@ -52,8 +52,8 @@
                             <td>{{ object.last_name }}</td>
                             <td>{{ object.email|truncatechars:"15" }}</td>
                             <td>{{ object.department.name }}</td>
-                            <td>{{ object.total_prod }}</td>
-                            <td>{{ object.total_week }}</td>
+                            <td>{% if object.total_prod %}{{ object.total_prod }}{% else %}0.0{% endif %}</td>
+                            <td>{% if object.total_week %}{{ object.total_week }}{% else %}0.0{% endif %}</td>
                             <td>{% if object.last_login %}{{ object.last_login|date:"H:i, d/m/y" }}{% else %}{{ object.last_login }}{% endif %}</td>
                             <td>[ time ]</td>
                             <td>{{ object.last_case_ref }}</td>
