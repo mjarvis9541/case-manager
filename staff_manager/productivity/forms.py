@@ -107,10 +107,10 @@ class TmTriageCaseCreate(forms.ModelForm):
     def clean_case_ref(self, *args, **kwargs):
         case_ref = self.cleaned_data.get('case_ref')
 
-        # if not case_ref.upper().startswith('CET'):
-        #     raise forms.ValidationError('CET Reference must begin with CET.')
-        # if Case.objects.filter(user=self.user, date=self.date, case_ref=case_ref).exists():
-        #     raise forms.ValidationError('You have already logged a case with this CET reference today.')
+        if not case_ref.upper().startswith('CET'):
+            raise forms.ValidationError('CET Reference must begin with CET.')
+        if Case.objects.filter(user=self.user, date=self.date, case_ref=case_ref).exists():
+            raise forms.ValidationError('You have already logged a case with this CET reference today.')
 
         return case_ref.upper()
 
