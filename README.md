@@ -1,32 +1,27 @@
 # case_manager
 
-A side project to create a system for work to help manage staff, track productivity, track time in office for contractual hours. 
+An application to track employee's productivity, workflow, time in the office, log in and log out times, view work stats in real-time, run and download reports to csv.
 
 
+## Notes
 
-## Applications
-
-
-1. Time Tracker
-
-
-
-2. Productivity Tracker
-
-Mins for cases
-IDV Proof - 15.000
-Reclassified - 2.500
-Final Final - 3.000
-Final Final Shell -4.000
+1. Productivity Tracker
+Mins for triage cases
+IDV Proof - 15
+Reclassified - 2.5
+Final Final - 3
+Final Final Shell - 4
 
 Activating the venv
 venv\Scripts\Activate.ps1
-
 
 Template tag filters
 {% if perms.auth.add_something %}
  {{do_smth}}
 {% endif %}
+
+2. Time Tracker
+TBC
 
 
 Requirements
