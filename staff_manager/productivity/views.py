@@ -482,33 +482,3 @@ def export_list_view(request):
     return render(request, 'productivity/reports.html', context)
 
 
-
-
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView
-)
-
-class UserListView(ListView):
-    model = User
-    paginate_by = 25
-
-
-class UserCreateView(CreateView):
-    model = User
-    fields = ['username', 'email', 'first_name', 'last_name', 'is_staff']
-
-
-class UserDetailView(DetailView):
-    model = User
-
-
-class UserUpdateView(UpdateView):
-    model = User
-
-
-class UserDeleteView(DeleteView):
-    model = User

@@ -56,3 +56,11 @@ class LoginForm(forms.Form):
     #         if not user:
     #             raise forms.ValidationError('Incorrect username/password.')
     #     return cleaned_data
+
+
+class StaffCreationForm(UserCreationForm):
+    username = forms.CharField(label='Staff ID')
+
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email', ]

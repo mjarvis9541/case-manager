@@ -66,3 +66,38 @@ def csv_export(request):
     
     response['Content-Disposition'] = 'attachment; filename="user-report.csv"'
     return response
+
+    
+
+
+from staff_manager.accounts.forms import UserRegistrationForm, StaffCreationForm
+
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
+
+class UserListView(ListView):
+    model = User
+    paginate_by = 25
+    
+
+
+class UserCreateView(CreateView):
+    model = User
+    form_class = StaffCreationForm
+    success_url = '/user/'
+
+class UserDetailView(DetailView):
+    model = User
+
+
+class UserUpdateView(UpdateView):
+    model = User
+
+
+class UserDeleteView(DeleteView):
+    model = User
