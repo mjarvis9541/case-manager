@@ -20,7 +20,7 @@
 
 
         </div>
-        <h2>Search/Filter: <small class=text-muted>[ Date ] [ User ID ] [ Case Type ] </small> </h2>
+        <h2>Filter: <small class=text-muted>[ Date ] [ User ID ] [ Case Type ] </small> </h2>
 
         <!-- Search functionality at the top of the database page -->
         <form>
@@ -28,7 +28,7 @@
                 <input type="search" name="q" class="form-control" placeholder="Search" value="{{ request.GET.q }}"
                     aria-label="Seach" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit">Search</button>
+                    <button class="btn btn-secondary" type="submit"><i class="fas fa-filter mr-2"></i>Filter</button>
                 </div>
             </div>
         </form>

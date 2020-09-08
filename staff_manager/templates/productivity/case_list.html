@@ -83,7 +83,7 @@
 
         <br><br><br>
         <div class="table-responsive">
-        <table class="table table-sm table-bordered table-striped text-nowrap">
+        <table class="table table-sm table-bordered table-hover table-striped text-nowrap">
             <thead>
                 <th style="width: 10%;">CET Reference</th>
                 <th style="width: 12.5%;">Case Type</th>
@@ -102,7 +102,7 @@
                 <td>{% if object.note %}{{ object.note|truncatechars:45 }}{% else %} {% endif %}</td>
                 <td class="text-center">{{ object.date|date:"" }}</td>
                 <td class="text-center">{{ object.date_created|time:"H:i:s" }}</td>
-                <td class="text-center"><a href="{% url 'prod:delete' object.id %}">Delete</a></td>
+                <td class="text-center"><a href="{% url 'prod:delete' object.id %}"><i class="far fa-trash-alt fa-smd text-danger"></i></a></td>
             </tr>
             {% endfor %}
         </table>

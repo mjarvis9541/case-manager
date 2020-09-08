@@ -8,14 +8,14 @@
             to the
             database, when it was last modified, who added it to the database and who last modified it.</p>
      
-        <h2>Search/Filter: <small class=text-muted>[ Department ] [ Task ] [ Minute Value ] </small> </h2>
+        <h2>Search: <small class=text-muted>[ Department ] [ Task ] [ Minute Value ] [ Description ]</small> </h2>
         <!-- SEARCH BAR -->
         <form>
             <div class="input-group mt-4 mb-3">
                 <input type="search" name="q" class="form-control" placeholder="Search" value="{{ request.GET.q }}"
                     aria-label="Seach" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit">Search</button>
+                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search mr-2"></i>Search</button>
                 </div>
             </div>
         </form>

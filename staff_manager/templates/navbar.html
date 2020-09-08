@@ -12,26 +12,26 @@
       
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:list' %}">Case Log</a>
+          <a class="nav-link" href="{% url 'prod:list' %}"><i class="fas fa-briefcase mr-2"></i>Case Log</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="">Timesheet</a>
+          <a class="nav-link" href=""><i class="fas fa-clock mr-2"></i></i>Timesheet</a>
         </li>
         {% if request.user.is_staff %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:teamlist' %}">Team</a>
+          <a class="nav-link" href="{% url 'prod:teamlist' %}"><i class="fas fa-user-friends mr-2"></i>Team</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:full-case-list' %}">Operation</a>
+          <a class="nav-link" href="{% url 'prod:full-case-list' %}"><i class="fas fa-sitemap mr-2"></i>Operation</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:casetype_list' %}">Tasks</a>
+          <a class="nav-link" href="{% url 'prod:casetype_list' %}"><i class="fas fa-tasks mr-2"></i>Tasks</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:export_list' %}">Reports</a>
+          <a class="nav-link" href="{% url 'prod:export_list' %}"><i class="fas fa-file-csv mr-2"></i>Reports</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:sitemap' %}">Development</a>
+          <a class="nav-link" href="{% url 'prod:sitemap' %}"><i class="fas fa-file-code mr-2"></i>Development</a>
         </li>
         {% endif %}
       </ul>
@@ -45,13 +45,13 @@
       </ul>
 
       <form class="form-inline mt-2 mt-md-0 " action="{% url 'accounts:logout' %}" method="POST"> {% csrf_token %}
-        <button class="btn btn-secondary btn-sm my-2 my-sm-0 width80" type="submit">Log out</button>
+        <button class="btn btn-secondary btn-sm my-2 my-sm-0" type="submit"><i class="fas fa-sign-out-alt mr-2"></i>Log out</button>
       </form>
 
       {% else %}
 
       <form class="form-inline mt-2 mt-md-0">
-        <a class="btn btn-secondary btn-sm my-2 my-sm-0 width80" href="{% url 'accounts:login' %}" role="button">Log
+        <a class="btn btn-secondary btn-sm my-2 my-sm-0 width80" href="{% url 'accounts:login' %}" role="button"><i class="fas fa-sign-out-alt mr-2"></i>Log
           in</a>
       </form>
 
