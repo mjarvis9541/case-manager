@@ -47,7 +47,11 @@ urlpatterns = [
 
     path('reports/', views.export_list_view, name='export_list'),
 
-
-
+    # Creating staff memembers
+    path('user/', views.UserListView.as_view(), name='user_list'),
+    path('user/new/', views.UserCreateView.as_view(), name='user_create'),
+    path('user/<int:pk>/', views.UserDetailView.as_view(), name='user_detail'),
+    path('user/<int:pk>/update/', views.UserUpdateView.as_view(), name='user_update'),
+    path('user/<int:pk>/delete/', views.UserDeleteView.as_view(), name='user_delete'),
 ]
 

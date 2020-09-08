@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+        <div class="card">
+            <div class="card-body">
+                <h1>User Form</h1>
+                <p>Create/Update a user in the form below.</p>
+                <hr class="mt-4 mb-4">
+                <form action="" method="POST"> {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="form-group mt-5">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <a class="btn btn-secondary" href="{% url 'prod:user_list' %}" role="button">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+{% endblock content %}

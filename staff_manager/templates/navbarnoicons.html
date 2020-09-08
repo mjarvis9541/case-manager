@@ -12,29 +12,29 @@
       
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:list' %}"><i class="fas fa-briefcase mr-2"></i>Case Log</a>
+          <a class="nav-link" href="{% url 'prod:list' %}">Case Log</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href=""><i class="fas fa-clock mr-2"></i></i>Timesheet</a>
+          <a class="nav-link" href="">Timesheet</a>
         </li>
         {% if request.user.is_staff %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:teamlist' %}"><i class="fas fa-user-friends mr-2"></i>Team</a>
+          <a class="nav-link" href="{% url 'prod:teamlist' %}">Team</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:full-case-list' %}"><i class="fas fa-sitemap mr-2"></i>Operation</a>
+          <a class="nav-link" href="{% url 'prod:full-case-list' %}">Operation</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:casetype_list' %}"><i class="fas fa-tasks mr-2"></i>Tasks</a>
+          <a class="nav-link" href="{% url 'prod:casetype_list' %}">Tasks</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:export_list' %}"><i class="fas fa-file-csv mr-2"></i>Reports</a>
+          <a class="nav-link" href="{% url 'prod:export_list' %}">Reports</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="{% url 'prod:sitemap' %}"><i class="fas fa-user-cog mr-2"></i>Admin</a>
-        </li>
+        </li> -->
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:sitemap' %}"><i class="fas fa-file-code mr-2"></i>Development</a>
+          <a class="nav-link" href="{% url 'prod:sitemap' %}">Development</a>
         </li>
         {% endif %}
       </ul>

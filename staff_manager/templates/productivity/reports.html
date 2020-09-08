@@ -4,19 +4,19 @@
 <div class="card">
     <div class="card-body">
 
-        <h1>Exports</h1>
+        <h1>Reports</h1>
         <p>Run various operational reports. All data available to download in CSV format.</p>
         <hr>
+<br>
+        <p><a href="{% url 'prod:export' %}">Production Report</a></p>
 
-        <p><a href="{% url 'prod:export' %}">Production report</a> - Case reports</p>
 
-        <p><a href="{% url 'prod:case_type_export' %}">Task Report</a> - Download all available registered task and
-            their minute-value in csv format</p>
 
-        <p><a href="{% url 'accounts:export' %}">User Export</a> - User specific data, staff ID, name, department,
-            manager name, ops name, etc.</p>
+        <p><a href="{% url 'accounts:export' %}">Staff Report</a></p>
 
-        <p><a href="">Department Export</a> - Department specific data</p>
+        <p><a href="{% url 'prod:case_type_export' %}">Task Report</a></p>
+
+        <p><a href="">Department Report</a></p>
 
 
     </div>

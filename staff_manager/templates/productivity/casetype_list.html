@@ -3,12 +3,12 @@
 {% load crispy_forms_tags %}
 <div class="card">
     <div class="card-body">
-        <h1>Case Type List</h1>
-        <p>A list of all case types with their associated minute-value. Data also shown for when the case type was added
-            to the
-            database, when it was last modified, who added it to the database and who last modified it.</p>
-     
-        <h2>Search: <small class=text-muted>[ Department ] [ Task ] [ Minute Value ] [ Description ]</small> </h2>
+        <h1>Tasks</h1>
+        <p>A list of all taks with their associated minute-value. Create, retreive, update and delete tasks here. Data
+            also shown for when the case type was added to the database, when it was last modified, who added it to
+            the database and who last modified it.</p>
+        <br>
+        <h2>Search: <small class=text-muted>[ Department ] [ Task ] [ Minutes ] [ Description ]</small> </h2>
         <!-- SEARCH BAR -->
         <form>
             <div class="input-group mt-4 mb-3">
@@ -22,78 +22,81 @@
 
         <p><a href="{% url 'prod:casetype_list' %}">Clear Search</a></p>
         <br>
-        <p><a class="btn btn-primary" href="{% url 'prod:casetype_create' %}" role="button">Create New Task</a></p>
+        <p><a class="btn btn-primary" href="{% url 'prod:casetype_create' %}" role="button"><i
+                    class="far fa-edit mr-1"></i> Create New Task</a></p>
 
-
-        <table class="table table-sm table-hover table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Department</th>
-                    <th>Task</th>
-                    <th>Minute Value</th>
-                    <th>Description</th>
-                    <!-- <th>Date Created</th>
+        <div class="table-responsive">
+            <table class="table table-sm table-hover text-nowrap table-bordered table-striped">
+                <thead class="">
+                    <tr>
+                        <th>Department</th>
+                        <th>Task</th>
+                        <th class="text-center">Mins</th>
+                        <th>Description</th>
+                        <!-- <th>Date Created</th>
                     <th>Date Modified</th>
                     <th>Created By</th>
                     <th>Modified By</th> -->
-                    <th>View</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for object in object_list%}
-                <tr>
-                    <td>{{ object.department.name }}</td>
-                    <td>{{ object.name }}</td>
-                    <td>{{ object.minutes }}</td>
-                    <td>{% if object.description %}{{ object.description|truncatechars:45 }}{% else %}{% endif %}</td>
-                    <!-- <td>{{ object.date_created }}</td>
+                        <th class="text-center">View</th>
+                        <th class="text-center">Edit</th>
+                        <th class="text-center">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for object in object_list%}
+                    <tr>
+                        <td>{{ object.department.name }}</td>
+                        <td>{{ object.name }}</td>
+                        <td class="text-center">{{ object.minutes }}</td>
+                        <td>{% if object.description %}{{ object.description|truncatechars:45 }}{% else %}{% endif %}
+                        </td>
+                        <!-- <td>{{ object.date_created }}</td>
                     <td>{{ object.date_modified}}</td>
                     <td>{{ object.created_by}}</td>
                     <td>{{ object.modified_by}}</td> -->
-                    <td><a href="{% url 'prod:casetype_detail' object.id %}">View</a></td>
-                    <td><a href="{% url 'prod:casetype_update' object.id %}">Edit</a></td>
-                    <td><a href="{% url 'prod:casetype_delete' object.id %}">Delete</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
+                        <td class="text-center"><a href="{% url 'prod:casetype_detail' object.id %}">View</a></td>
+                        <td class="text-center"><a href="{% url 'prod:casetype_update' object.id %}">Edit</a></td>
+                        <td class="text-center"><a href="{% url 'prod:casetype_delete' object.id %}">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <!-- PAGINATION -->
 
         <div class="row">
             <div class="col mt-4 mb-2">
-                <div class="pagination">
-                    <span class="step-links">
+                <div class="d-flex justify-content-end">
+                    <div class="pagination">
+                        <span class="step-links">
 
-                        <!-- LEFT -->
-                        {% if object_list.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        |
-                        <a
-                            href="?page={{ object_list.previous_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
-                        {% endif %}
+                            <!-- LEFT -->
+                            {% if object_list.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            |
+                            <a
+                                href="?page={{ object_list.previous_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+                            {% endif %}
 
-                        <!-- CENTER -->
-                        <span class="current">
-                            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+                            <!-- CENTER -->
+                            <span class="current">
+                                Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+                            </span>
+
+                            <!-- RIGHT -->
+                            {% if object_list.has_next %}
+                            <a
+                                href="?page={{ object_list.next_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+                            |
+                            <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+
+
                         </span>
-
-                        <!-- RIGHT -->
-                        {% if object_list.has_next %}
-                        <a
-                            href="?page={{ object_list.next_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
-                        |
-                        <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
-                        {% endif %}
-
-
-                    </span>
+                    </div>
                 </div>
             </div>
         </div>
-
 
     </div>
 </div>

@@ -299,6 +299,7 @@ def full_case_list_view(request):
         object_list = object_list.filter(
             Q(date__icontains=q)
             | Q(user__username__icontains=q)
+            | Q(case_type__department__name__icontains=q)
             | Q(case_type__name__icontains=q)
             | Q(case_ref__icontains=q)
         )  # .distinct()
@@ -319,7 +320,7 @@ def full_case_list_view(request):
     # Search query - can search by the below parameters
 
 
-    paginator = Paginator(object_list, 50)
+    paginator = Paginator(object_list, 38)
     page = request.GET.get("page")
     object_list = paginator.get_page(page)
 
@@ -391,6 +392,7 @@ def casetype_list_view(request):
             Q(name__icontains=q)
             | Q(department__name__icontains=q)
             | Q(minutes__icontains=q)
+            | Q(description__icontains=q)
         )  # .distinct()
 
     paginator = Paginator(object_list, 100)
@@ -410,12 +412,12 @@ def casetype_create_view(request):
             instance = form.save(commit=False)
             instance.created_by = request.user
             instance.save()
-            messages.success(request, f'New case type {instance.name} has been created')
+            messages.success(request, f'New task {instance.name} has been created')
             return redirect('prod:casetype_list')
     else:
         form = CaseTypeForm()
     context = {
-        'title': 'Create New Case Type',
+        'title': 'Create New Task',
         'form': form,
     }
     return render(request, 'productivity/casetype_form.html', context)
@@ -437,11 +439,12 @@ def casetype_update_view(request, pk):
             instance = form.save(commit=False)
             instance.modified_by = request.user
             instance.save()
+            messages.success(request, f'Task - {instance.name} has been updated')
             return redirect(f'prod:casetype_list')
     else:
         form = CaseTypeForm(instance=obj)
     context = {
-        'title': 'Update Case Type',
+        'title': 'Update Task',
         'form': form,
     }
     return render(request, 'productivity/casetype_form.html', context)
@@ -452,7 +455,7 @@ def casetype_delete_view(request, pk):
     obj = get_object_or_404(CaseType, id=pk)
     if request.method == 'POST':
         obj.delete()
-        messages.warning(request, f'{obj.name} - worth {obj.minutes} minutes has been deleted')
+        messages.warning(request, f'{obj.name} for {obj.minutes} minutes has been deleted')
         return redirect('prod:casetype_list')
     context = {
         'object': obj,
@@ -463,7 +466,7 @@ def casetype_delete_view(request, pk):
 
 
         
-
+# in prog
 def export_list_view(request):
     form = ExportForm(request.POST or None)
     download_form = None
@@ -477,3 +480,35 @@ def export_list_view(request):
         'download_form': download_form,
     }
     return render(request, 'productivity/reports.html', context)
+
+
+
+
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
+
+class UserListView(ListView):
+    model = User
+    paginate_by = 25
+
+
+class UserCreateView(CreateView):
+    model = User
+    fields = ['username', 'email', 'first_name', 'last_name', 'is_staff']
+
+
+class UserDetailView(DetailView):
+    model = User
+
+
+class UserUpdateView(UpdateView):
+    model = User
+
+
+class UserDeleteView(DeleteView):
+    model = User

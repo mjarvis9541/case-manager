@@ -4,23 +4,26 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-8">
+            <div class="col-sm-8">
                 <h1>Operational View</h1>
                 <p>A senior manager view to see all cases logged in real-time.</p>
-                <br>
+
             </div>
 
-            <div class="col-4">
 
-                <table class="table table-bordered text-center">
-                    <td><a href="{% url 'prod:ch_stats' %}" style="font-size: 1.5rem"> <strong>Productivity Report
-                            </strong></a></td>
-                </table>
+            <div class="col-sm-4">
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center">
+                        <td><a href="{% url 'prod:ch_stats' %}" style="font-size: 1.5rem"> <strong>Productivity Report
+                                </strong></a></td>
+                    </table>
+                </div>
             </div>
-
 
         </div>
-        <h2>Filter: <small class=text-muted>[ Date ] [ User ID ] [ Case Type ] </small> </h2>
+        <br>
+        <h2>Search/Filter Options: <small class=text-muted>[ Date ] [ Staff ID ] [ Reference ] [ Department ] [ Case
+                Type ] </small> </h2>
 
         <!-- Search functionality at the top of the database page -->
         <form>
@@ -37,63 +40,58 @@
             <a href="{% url 'prod:full-case-list' %}">Clear Search</a>
         </div>
         <br>
-
-
-        <table class="table table-sm  table-bordered table-striped table-hover">
-            <tr>
-                <thead class="thead-dark">
-                    <tr>
-                        <th class="text-left">Case Type</th>
-                        <th>Cases Logged</th>
-                        <th>Minutes Logged</th>
-                    </tr>
-                </thead>
-            <tr>
-                <th>IDV Proof</th>
-                <td> {{ total_idv_count }} </td>
-                <td> {{ total_idv_mins }} </td>
-            </tr>
-            <tr>
-                <th>Final Final/Sub</th>
-                <td> {{ total_ff_count }} </td>
-                <td> {{ total_ff_mins }} </td>
-            </tr>
-            <tr>
-                <th>Final Final Shell</th>
-                <td> {{ total_ffs_count }} </td>
-                <td> {{ total_ffs_mins }} </td>
-            </tr>
-            <tr>
-                <th>Reclassified Cases</th>
-                <td> {{ total_reclass_count }} </td>
-                <td> {{ total_reclass_mins }} </td>
-            </tr>
-            <tfoot>
+        <div class="table-responsive">
+            <table class="table table-sm text-center table-bordered table-striped table-hover">
                 <tr>
-                    <th>Total:</th>
-                    <th> {{ total_count }} </th>
-                    <th>{{ total_mins }}</th>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="width: 33.3%;" class="text-left">Case Type</th>
+                            <th style="width: 33.3%;">Cases Logged</th>
+                            <th style="width: 33.3%;">Minutes Logged</th>
+                        </tr>
+                    </thead>
+                <tr>
+                    <th class="text-left">IDV Proof</th>
+                    <td> {{ total_idv_count }} </td>
+                    <td> {{ total_idv_mins }} </td>
                 </tr>
-            </tfoot>
-        </table>
-
+                <tr>
+                    <th class="text-left">Final Final/Sub</th>
+                    <td> {{ total_ff_count }} </td>
+                    <td> {{ total_ff_mins }} </td>
+                </tr>
+                <tr>
+                    <th class="text-left">Final Final Shell</th>
+                    <td> {{ total_ffs_count }} </td>
+                    <td> {{ total_ffs_mins }} </td>
+                </tr>
+                <tr>
+                    <th class="text-left">Reclassified Cases</th>
+                    <td> {{ total_reclass_count }} </td>
+                    <td> {{ total_reclass_mins }} </td>
+                </tr>
+                <tfoot>
+                    <tr>
+                        <th style="font-size: 1.2rem;" class="text-left">Total:</th>
+                        <th style="font-size: 1.2rem;"> {{ total_count }} </th>
+                        <th style="font-size: 1.2rem;">{{ total_mins }}</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
         <br>
 
         <div class="row">
-
             <div class="col-sm-6">
-                <h2>Completed Cases <small class=text-muted>[ {{ total_count }} cases ] [ {{ total_mins }} minutes
+                <h2>Completed Cases: <small class=text-muted>[ {{ total_count }} cases ] [ {{ total_mins }} minutes
                         ]</small>
-               
             </div>
-
-      
         </div>
-<hr>
-   <!-- COMPLETED CASES AND DOWNLOAD ROW -->
+        <hr>
+        <!-- COMPLETED CASES AND DOWNLOAD ROW -->
 
 
-    <!-- <div class="col-md-6">
+        <!-- <div class="col-md-6">
 
                 <form class="form-inline" action="" method="GET">
                     <div class="form-group mx-sm-2">
@@ -108,72 +106,75 @@
     </div> -->
 
 
-    <div class="table-responsive">
-        <table class="table table-sm table-bordered table-striped table-hover text-nowrap">
-            <thead class="thead-dark">
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-striped table-hover text-nowrap">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width: 8%;">Date</th>
+                        <th style="width: 6%;">Staff ID</th>
+                        <th style="width: 10%;">Reference</th>
+                        <th style="width: 6%;">Dept.</th>
+                        <th style="width: 12%;">Case Type</th>
+                        <th style="width: 5%;" class="text-center">Mins</th>
+                        <th>Case Notes</th>
+                        <th style="width: 8%;" class="text-center">Date Added</th>
+                        <th style="width: 8%;" class="text-center">Time Added</th>
+                    </tr>
+                </thead>
+
+                {% for object in object_list %}
                 <tr>
-                    <th style="width: 11%;">Date Completed</th>
-                    <th style="width: 6%;">User ID</th>
-                    <th style="width: 9%;">Reference</th>
-                    <th style="width: 10%;">Case Type</th>
-                    <th style="width: 5%;" class="text-center">Mins</th>
-                    <th style="width: 43%;">Case Handler Notes</th>
-                    <th style="width: 8%;" class="text-center">Date Added</th>
-                    <th style="width: 8%;" class="text-center">Time Added</th>
+                    <td>{{ object.date }}</td>
+                    <td><a href="{% url 'prod:tmview' object.user.id %}">{{ object.user.username }}</a></td>
+                    <td><a href="{% url 'prod:update' object.id %}">{{ object.case_ref }}</a></td>
+                    <td>{{ object.case_type.department }}</td>
+                    <td>{{ object.case_type }}</td>
+                    <td class="text-center">{{ object.case_type.minutes }}</td>
+                    <td>{% if object.note %}{{ object.note|truncatechars:25 }}{% else %} {% endif %}</td>
+                    <td class="text-center">{{ object.date_created|date:"" }}</td>
+                    <td class="text-center">{{ object.date_created|time:"H:i:s" }}</td>
                 </tr>
-            </thead>
-
-            {% for object in object_list %}
-            <tr>
-                <td>{{object.date }}</td>
-                <td><a href="{% url 'prod:tmview' object.user.id %}">{{ object.user.username }}</a></td>
-                <td><a href="{% url 'prod:update' object.id %}">{{ object.case_ref }}</a></td>
-                <td>{{ object.case_type }}</td>
-                <td class="text-center">{{ object.case_type.minutes }}</td>
-                <td>{% if object.note %}{{ object.note|truncatechars:25 }}{% else %} {% endif %}</td>
-                <td class="text-center">{{ object.date_created|date:"" }}</td>
-                <td class="text-center">{{ object.date_created|time:"H:i:s" }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
+                {% endfor %}
+            </table>
+        </div>
 
 
-    <!-- PAGINATION -->
+        <!-- PAGINATION -->
 
-    <div class="row">
-        <div class="col mt-4 mb-2">
-            <div class="pagination">
-                <span class="step-links">
+        <div class="row">
+            <div class="col mt-4 mb-2">
+                <div class="d-flex justify-content-end">
+                    <div class="pagination">
+                        <span class="step-links">
 
-                    <!-- LEFT -->
-                    {% if object_list.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    |
-                    <a
-                        href="?page={{ object_list.previous_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
-                    {% endif %}
+                            <!-- LEFT -->
+                            {% if object_list.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            |
+                            <a
+                                href="?page={{ object_list.previous_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+                            {% endif %}
 
-                    <!-- CENTER -->
-                    <span class="current">
-                        Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
-                    </span>
+                            <!-- CENTER -->
+                            <span class="current">
+                                Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+                            </span>
 
-                    <!-- RIGHT -->
-                    {% if object_list.has_next %}
-                    <a
-                        href="?page={{ object_list.next_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
-                    |
-                    <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
-                    {% endif %}
+                            <!-- RIGHT -->
+                            {% if object_list.has_next %}
+                            <a
+                                href="?page={{ object_list.next_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+                            |
+                            <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
 
 
-                </span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
-
-
-</div>
 </div>
 {% endblock content %}

@@ -1,36 +1,73 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load crispy_forms_tags %}
-
 <div class="card">
     <div class="card-body">
+        <h1>Staff Manager</h1>
+        <p>List of all staff registered on Case Manager</p>
+        <hr>
+        <br>
+        <p><a class="btn btn-primary" href="{% url 'prod:casetype_create' %}" role="button"><i
+                    class="far fa-edit mr-1"></i>Register New Staff</a></p>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered table-striped">
+                <thead>
+                    <th>Staff ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Team Manager</th>
+                    <th>Ops Manager</th>
+                </thead>
+                <tbody>
+                    {% for object in object_list%}
+                    <tr>
+                        <td><a href="{% url 'prod:user_detail' object.id %}">{{ object.username }}</a></td>
+                        <td>{{ object.first_name }}</td>
+                        <td>{{ object.last_name }}</td>
+                        <td>{{ object.email }}</td>
+                        <td>{{ object.department }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-        <table class="table table-sm table-bordered table-striped">
-            <thead>
-                <th>Staff Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Team Manager</th>
-                <th>Ops Manager</th>
+        
+        <!-- PAGINATION -->
+        <div class="row">
+            <div class="col mt-4 mb-2">
+                <div class="d-flex justify-content-end">
+                    <div class="pagination">
+                        <span class="step-links">
 
-            </thead>
+                            <!-- LEFT -->
+                            {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                            {% endif %}
 
-            {% for object in object_list%}
-            <tr>
-                <td><a href="">{{ object.username }}</a></td>
-                <td>{{ object.first_name }}</td>
-                <td>{{ object.last_name }}</td>
-                <td>{{ object.email }}</td>
-                <td><td>
+                            <!-- CENTER -->
+                            <span class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
 
-                </td></td>
+                            <!-- RIGHT -->
+                            {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
 
 
-            </tr>
-            {% endfor %}
-        </table>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
-
 {% endblock content %}

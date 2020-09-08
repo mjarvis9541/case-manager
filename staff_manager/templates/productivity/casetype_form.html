@@ -3,8 +3,8 @@
 {% load crispy_forms_tags %}
 <div class="card">
     <div class="card-body">
-        <h1>{% if title %}{{ title }}{% else %}Case Type Form{% endif %}</h1>
-        <p>Create/update case type below.</p>
+        <h1>{% if title %}{{ title }}{% else %}Task Form{% endif %}</h1>
+        <p>Create/update tasks below.</p>
         <hr>
         <form action="" method="POST"> {% csrf_token %}
             {{ form|crispy }}

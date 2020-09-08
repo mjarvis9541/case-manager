@@ -7,19 +7,24 @@ from django.db.models.functions import Coalesce, Round, ExtractYear, ExtractWeek
 
 class Department(models.Model):
     name = models.CharField(max_length=50)
-    date_created = models.DateTimeField(default=timezone.now, blank=True)
-    date_modified = models.DateTimeField(default=timezone.now, blank=True)
+    #date_created = models.DateTimeField(default=timezone.now, blank=True)
+    #date_modified = models.DateTimeField(default=timezone.now, blank=True)
     #created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, blank=True, null=True, related_name='casetype_created_by')
     #modified_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, blank=True, null=True,  related_name='casetype_modified_by')
 
     def __str__(self):
         return self.name
+        
+    class Meta:
+        verbose_name = 'derpartment'
+        verbose_name_plural = 'departments'
+        ordering = ['name']
 
 
 class CaseType(models.Model):
     name = models.CharField(max_length=50)
     department = models.ForeignKey(Department, on_delete=models.PROTECT, default=1)
-    minutes = models.FloatField()
+    minutes = models.FloatField(help_text='The amount of minutes towards target completing the task awards.')
     description = models.CharField(max_length=250, blank=True, null=True, help_text='Optional. Description of the task (Eg. Used for when case handlers log PPI cases, etc)')
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
@@ -30,8 +35,8 @@ class CaseType(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'case type'
-        verbose_name_plural = 'case types'
+        verbose_name = 'task'
+        verbose_name_plural = 'tasks'
         ordering = ['name']
 
 
@@ -63,7 +68,7 @@ class Case(models.Model):
 
     class Meta:
         verbose_name = 'case'
-        verbose_name_plural = 'case manager'
+        verbose_name_plural = 'cases'
         # constraints = [
         #     models.UniqueConstraint(fields=["user", "date", "cet_ref"], name="unique_ref_date")
         # ]

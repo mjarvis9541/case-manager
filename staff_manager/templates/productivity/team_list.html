@@ -8,68 +8,102 @@
             <div class="col">
                 <h1>Team View</h1>
                 <p>A list of all staff -- Click staff ID to view individual team members productivity for this week.</p>
-         
-              <br>
-              <h2>Search: <small class=text-muted>[ Staff ID ] [ First name ] [ Last name ] </small> </h2>
-        <!-- SEARCH BAR -->
-        <form>
-            <div class="input-group mt-4 mb-3">
-                <input type="search" name="q" class="form-control" placeholder="Search" value="{{ request.GET.q }}"
-                    aria-label="Seach" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search mr-2"></i>Search</button>
-                </div>
-            </div>
-        </form>
-        <p><a href="{% url 'prod:teamlist' %}">Clear Search</a></p>
-     
-        <div class="table-responsive">
-                <table class="table table-sm table-bordered text-nowrap table-hover table-striped">
-                    <thead class="text-nowrap">
-                        <tr>
-                            <th>Staff ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Department</th>
-                            <!-- <th>Team Manager</th>
+
+                <br>
+                <h2>Search: <small class=text-muted>[ Staff ID ] [ First Name ] [ Last Name ] </small> </h2>
+                <!-- SEARCH BAR -->
+                <form>
+                    <div class="input-group mt-4 mb-3">
+                        <input type="search" name="q" class="form-control" placeholder="Search"
+                            value="{{ request.GET.q }}" aria-label="Seach" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit"><i
+                                    class="fas fa-search mr-2"></i>Search</button>
+                        </div>
+                    </div>
+                </form>
+                <p><a href="{% url 'prod:teamlist' %}">Clear Search</a></p>
+
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered text-nowrap table-hover table-striped">
+                        <thead class="text-nowrap ">
+                            <tr>
+                                <th>Staff ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <!-- <th>Team Manager</th>
                             <th>Ops Manager</th>
                             <th>Prod Today</th>
                             <th>Prod Week</th> -->
-                            <th>Prod/Today</th>
-                            <th>Prod/Week</th>
-                            <th>Last Log In</th>
-                            <th>Log Out</th>
-                            <th>Last Case Ref</th>
-                            <th>Last Case Time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for object in object_list %}
-                        <tr>
-                            <td><a href="{% url 'prod:tmview' object.id %}">{{ object.username }}</a></td>
-                            <td>{{ object.first_name }}</td>
-                            <td>{{ object.last_name }}</td>
-                            <td>{{ object.email|truncatechars:"15" }}</td>
-                            <td>{{ object.department.name }}</td>
-                            <td>{% if object.total_prod %}{{ object.total_prod }}{% else %}0.0{% endif %}</td>
-                            <td>{% if object.total_week %}{{ object.total_week }}{% else %}0.0{% endif %}</td>
-                            <td>{% if object.last_login %}{{ object.last_login|date:"H:i, d/m/y" }}{% else %}{{ object.last_login }}{% endif %}</td>
-                            <td>[ time ]</td>
-                            <td>{{ object.last_case_ref }}</td>
-                            <td>{% if object.last_case %}{{ object.last_case|date:"H:i, d/m/y" }}{% else %}{{ object.last_case }}{% endif %}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
+                                <th class="text-center">Prod/Today</th>
+                                <th class="text-center">Prod/Week</th>
+                                <th>Last Log In</th>
+                                <th>Log Out</th>
+                                <th>Last Case Ref</th>
+                                <th>Last Case Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for object in object_list %}
+                            <tr>
+                                <td><a href="{% url 'prod:tmview' object.id %}">{{ object.username }}</a></td>
+                                <td>{{ object.first_name }}</td>
+                                <td>{{ object.last_name }}</td>
+                                <td>{{ object.email|truncatechars:"15" }}</td>
+                                <td>{{ object.department.name }}</td>
+                                <td class="text-center">{% if object.total_prod %}{{ object.total_prod }}{% else %}0.0{% endif %}</td>
+                                <td class="text-center">{% if object.total_week %}{{ object.total_week }}{% else %}0.0{% endif %}</td>
+                                <td>{% if object.last_login %}{{ object.last_login|date:"H:i, d/m/y" }}{% else %}{{ object.last_login }}{% endif %}
+                                </td>
+                                <td>[ time ]</td>
+                                <td>{{ object.last_case_ref }}</td>
+                                <td>{% if object.last_case %}{{ object.last_case|date:"H:i, d/m/y" }}{% else %}{{ object.last_case }}{% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
 
-                </table>
-            </div>
+                    </table>
+                </div>
 
             </div>
         </div>
+        <!-- PAGINATION -->
 
-<table>
-    
-    </table>
+        <div class="row">
+            <div class="col mt-4 mb-2">
+                <div class="d-flex justify-content-end">
+                    <div class="pagination">
+                        <span class="step-links">
+
+                            <!-- LEFT -->
+                            {% if object_list.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            |
+                            <a
+                                href="?page={{ object_list.previous_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
+                            {% endif %}
+
+                            <!-- CENTER -->
+                            <span class="current">
+                                Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+                            </span>
+
+                            <!-- RIGHT -->
+                            {% if object_list.has_next %}
+                            <a
+                                href="?page={{ object_list.next_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">next</a>
+                            |
+                            <a href="?page={{ object_list.paginator.num_pages }}">last &raquo;</a>
+                            {% endif %}
+
+
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {% endblock content %}
