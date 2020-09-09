@@ -96,7 +96,7 @@
 
             {% for object in weektotal %}
             <tr>
-                <td>{{ object.case_ref }}</td>
+                <td>{{ object.case_ref|truncatechars:"12" }}</td>
                 <td>{{ object.case_type }}</td>
                 <td class="text-center">{{ object.case_type.minutes }}</td>
                 <td>{% if object.note %}{{ object.note|truncatechars:45 }}{% else %} {% endif %}</td>

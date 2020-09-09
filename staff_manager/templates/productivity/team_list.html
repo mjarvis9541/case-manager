@@ -13,7 +13,7 @@
                 <h2>Search: <small class=text-muted>[ Staff ID ] [ First Name ] [ Last Name ] </small> </h2>
                 <!-- SEARCH BAR -->
                 <form>
-                    <div class="input-group mt-4 mb-4">
+                    <div class="input-group mt-4 mb-3">
                         <input type="search" name="q" class="form-control" placeholder="Search"
                             value="{{ request.GET.q }}" aria-label="Seach" aria-describedby="basic-addon2">
                         <div class="input-group-append">
@@ -23,10 +23,10 @@
                     </div>
                 </form>
                 <p><a href="{% url 'prod:teamlist' %}">Clear Search</a></p>
-
+<br>
                 <div class="table-responsive">
                     <table class="table table-sm table-bordered text-nowrap table-hover table-striped">
-                        <thead class="text-nowrap thead-dark ">
+                        <thead class="text-nowrap thead- ">
                             <tr>
                                 <th colspan="5">Staff Info</th>
                                 <th colspan="8">Production</th>
@@ -81,7 +81,7 @@
                                 <td>{% if object.last_login %}{{ object.last_login|date:"d/m/y, H:i" }}{% else %}{{ object.last_login }}{% endif %}
                                 </td>
                                 <td>[ time ]</td>
-                                <td>{{ object.last_case_ref }}</td>
+                                <td>{{ object.last_case_ref|truncatechars:"12" }}</td>
                                 <td>{% if object.last_case %}{{ object.last_case|date:"d/m/y, H:i" }}{% else %}{{ object.last_case }}{% endif %}
                                 </td>
                             </tr>

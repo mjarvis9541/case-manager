@@ -10,7 +10,7 @@
 
     <div class="collapse navbar-collapse text-nowrap" id="navbarCollapse">
       
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto  nav-fil">
         <li class="nav-item">
           <a class="nav-link" href="{% url 'prod:list' %}"><i class="fas fa-briefcase mr-2"></i>Case Log</a>
         </li>
@@ -30,9 +30,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'prod:export_list' %}"><i class="fas fa-file-csv mr-2"></i>Reports</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="{% url 'accounts:user_list' %}"><i class="fas fa-user-cog mr-2"></i>Admin</a>
-        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:user_list' %}"><i class="fas fa-user-cog mr-2"></i>Staff</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'prod:sitemap' %}"><i class="fas fa-file-code mr-2"></i>Development</a>
         </li>

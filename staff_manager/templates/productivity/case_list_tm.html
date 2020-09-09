@@ -93,13 +93,14 @@
 
             {% for object in weektotal %}
             <tr>
-                <td><a href="{% url 'prod:update' object.id %}">{{ object.case_ref }}</a></td>
+                <td><a href="{% url 'prod:update' object.id %}">{{ object.case_ref|truncatechars:"12" }}</a></td>
                 <td>{{ object.case_type }}</td>
                 <td class="text-center">{{ object.case_type.minutes }}</td>
                 <td>{% if object.note %}{{ object.note|truncatechars:45 }}{% else %} {% endif %}</td>
                 <td class="text-center">{{ object.date|date:"" }}</td>
                 <td class="text-center">{{ object.date_created|time:"H:i:s" }}</td>
-                <td class="text-center"><a href="{% url 'prod:tmdelete' object.id %}"><i class="far fa-trash-alt fa-md text-danger"></i></a></td>
+                <td class="text-center"><a href="{% url 'prod:tmdelete' object.id %}">Delete</a></td>
+                <!-- <i class="far fa-trash-alt fa-md text-danger"></i> -->
             </tr>
             {% endfor %}
         </table>

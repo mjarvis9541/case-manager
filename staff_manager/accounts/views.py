@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
+
 
 User = get_user_model()
 
@@ -80,24 +83,28 @@ from django.views.generic import (
     DeleteView
 )
 
-class UserListView(ListView):
+class UserListView(LoginRequiredMixin, ListView):
     model = User
     paginate_by = 25
     
 
-
-class UserCreateView(CreateView):
+class UserCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = User
     form_class = StaffCreationForm
-    success_url = '/user/'
+    success_url = '/accounts/user/'
+    success_message = 'User created'
 
-class UserDetailView(DetailView):
+class UserDetailView(LoginRequiredMixin, DetailView):
     model = User
+    
 
-
-class UserUpdateView(UpdateView):
+class UserUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = User
+    form_class = StaffCreationForm
+    success_url = '/accounts/user/'
+    success_message = 'User updated'
 
-
-class UserDeleteView(DeleteView):
+class UserDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = User
+    success_url = '/accounts/user/'
+    success_message = 'User deleted'

@@ -4,13 +4,12 @@
 
 <div class="card">
     <div class="card-body">
-        <h1>Delete User</h1>
+        <h1>Delete Case</h1>
         <hr>
         <form method="POST">
             {% csrf_token %}
             <fieldset class="form-group">
-                <p>Are you sure you want to delete <strong>{{ object.case_ref }}</strong> -
-                    <strong>{{ object.case_type }}</strong>?</p>
+                <p>Are you sure you want to delete {{ object }}?</p>
                 <p>This action cannot be undone.</p>
             </fieldset>
             <div class="form-group">

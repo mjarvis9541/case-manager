@@ -6,7 +6,20 @@
         <h1>Staff Manager</h1>
         <p>List of all staff registered on Case Manager. View, register, detail, update and create staff profiles below.</p>
         <hr>
-        <br>
+ 
+        <!-- <form>
+            <div class="input-group mt-4 mb-3">
+                <input type="search" name="q" class="form-control" placeholder="Search Staff"
+                    value="{{ request.GET.q }}" aria-label="Seach" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit"><i
+                            class="fas fa-search mr-2"></i>Search</button>
+                </div>
+            </div>
+        </form>
+        <p><a href="{% url 'prod:teamlist' %}">Clear Search</a></p> -->
+
+<br>
         <p><a class="btn btn-primary" href="{% url 'accounts:user_create' %}" role="button"><i
                     class="far fa-edit mr-2"></i>Register New Staff</a></p>
         <div class="table-responsive">
@@ -19,17 +32,21 @@
                     <th>Department</th>
                     <th>Team Manager</th>
                     <th>Ops Manager</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </thead>
                 <tbody>
                     {% for object in object_list%}
                     <tr>
-                        <td><a href="{% url 'accounts:user_detail' object.id %}">{{ object.username }}</a></td>
+                        <td><a href="{% url 'prod:tmview' object.id %}">{{ object.username }}</a></td>
                         <td>{{ object.first_name }}</td>
                         <td>{{ object.last_name }}</td>
                         <td>{{ object.email }}</td>
                         <td>{{ object.department }}</td>
-                        <td></td>
-                        <td></td>
+                        <td>[ tm name ]</td>
+                        <td>[ om name ]</td>
+                        <td><a href="{% url 'accounts:user_update' object.id %}">Edit</a></td>
+                        <td><a href="{% url 'accounts:user_delete' object.id %}">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -47,6 +64,7 @@
                             <!-- LEFT -->
                             {% if page_obj.has_previous %}
                             <a href="?page=1">&laquo; first</a>
+                            |
                             <a href="?page={{ page_obj.previous_page_number }}">previous</a>
                             {% endif %}
 
@@ -58,6 +76,7 @@
                             <!-- RIGHT -->
                             {% if page_obj.has_next %}
                             <a href="?page={{ page_obj.next_page_number }}">next</a>
+                            |
                             <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
                             {% endif %}
 

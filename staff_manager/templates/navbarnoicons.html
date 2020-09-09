@@ -12,14 +12,14 @@
       
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:list' %}">Case Log</a>
+          <a class="nav-link " href="{% url 'prod:list' %}">Case Log</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="">Timesheet</a>
         </li>
         {% if request.user.is_staff %}
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'prod:teamlist' %}">Team</a>
+          <a class="nav-link " href="{% url 'prod:teamlist' %}">Team</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'prod:full-case-list' %}">Operation</a>
@@ -30,9 +30,9 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'prod:export_list' %}">Reports</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="{% url 'accounts:user_list' %}">Admin</a>
-        </li> -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'accounts:user_list' %}">Staff</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'prod:sitemap' %}">Development</a>
         </li>

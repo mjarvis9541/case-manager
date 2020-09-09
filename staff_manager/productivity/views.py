@@ -304,8 +304,8 @@ def csv_export(request):
 
     response = HttpResponse(content_type='text/csv')   
     writer = csv.writer(response)
-    writer.writerow(['user', 'date_claimed', 'case_type', 'case_ref', 'note', 'date_added', 'date_modified'])
-    for x in Case.objects.all().values_list('user__username', 'date', 'case_type__name', 'case_ref', 'note', 'date_created', 'date_modified'):
+    writer.writerow(['user', 'date_claimed', 'department', 'case_type', 'case_ref', 'note', 'date_added', 'date_modified'])
+    for x in Case.objects.all().values_list('user__username', 'date', 'case_type__department__name', 'case_type__name', 'case_ref', 'note', 'date_created', 'date_modified'):
         writer.writerow(x)
     response['Content-Disposition'] = 'attachment; filename="case-report.csv"'
     return response
