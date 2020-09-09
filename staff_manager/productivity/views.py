@@ -1,5 +1,7 @@
 
 import csv
+from datetime import datetime, timedelta
+
 from django.contrib.postgres.search import SearchVector
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -130,8 +132,18 @@ Only TMs can update cases that have already been put on caseflow.
 def team_list_view(request):
     today = timezone.now()
     week_number = timezone.now().isocalendar()[1]
+    mon = today - timedelta(days=today.weekday())
+    tue = mon + timedelta(days=1)
+    wed = mon + timedelta(days=2)
+    thu = mon + timedelta(days=3)
+    fri = mon + timedelta(days=4)
+    sat = mon + timedelta(days=5)
+    sun = mon + timedelta(days=6)    
+
     object_list = (
         User.objects.all()
+
+        # getting date last case worked
         .annotate(
             last_case=Subquery(
                 Case.objects.filter(user=OuterRef("pk"),).order_by('-date_created').values(
@@ -139,6 +151,7 @@ def team_list_view(request):
                 )[:1]
             )
         )
+        # Getting last case ref
         .annotate(
             last_case_ref=Subquery(
                 Case.objects.filter(user=OuterRef("pk"),).order_by('-date_created').values(
@@ -147,18 +160,60 @@ def team_list_view(request):
             )
         )
 
-        # Getting the user object -
+        # Getting the total prod for today
         .annotate(
             total_prod=Subquery(
-                Case.objects.filter(user=OuterRef("pk"), date=today).values_list('user').annotate(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date=today).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+            # prod for current week
+            .annotate(
+            total_week=Subquery(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date__week=week_number).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+            # Monday's prod
+            .annotate(
+            mon_prod=Subquery(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date=mon).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+            # Tue prod
+            .annotate(
+            tue_prod=Subquery(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date=tue).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+            # Tue prod
+            .annotate(
+            wed_prod=Subquery(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date=wed).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+
+            .annotate(
+            thu_prod=Subquery(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date=thu).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+                            # Tue prod
+            .annotate(
+            fri_prod=Subquery(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date=fri).values_list('user').annotate(
                     case_count=Sum('case_type__minutes')).values('case_count'))
                 )
             .annotate(
-            total_week=Subquery(
-                Case.objects.filter(user=OuterRef("pk"), date__week=week_number).values_list('user').annotate(
+            sat_prod=Subquery(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date=sat).values_list('user').annotate(
                     case_count=Sum('case_type__minutes')).values('case_count'))
                 )
-            )
+                
+            .annotate(
+            sun_prod=Subquery(
+                Case.objects.select_related('case_type').filter(user=OuterRef("pk"), date=sun).values_list('user').annotate(
+                    case_count=Sum('case_type__minutes')).values('case_count'))
+                )
+            )            
         
     
 

@@ -19,7 +19,7 @@
                     {% for object in object_list%}
 
                     <tr>
-                        <td><a href="{% url 'prod:user_detail' object.id %}">{{ object.username }}</a></td>
+                        <td><a href="{% url 'accounts:user_detail' object.id %}">{{ object.username }}</a></td>
                         <td>{{ object.first_name }}</td>
                         <td>{{ object.last_name }}</td>
                         <td>{{ object.email }}</td>
