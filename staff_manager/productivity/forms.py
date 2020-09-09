@@ -38,7 +38,7 @@ class TriageCaseCreate(forms.ModelForm):
         if not case_ref.upper().startswith('CET') and not str(case_type) == 'Reclassified':
             raise forms.ValidationError('Please enter a valid CET Reference.')
 
-        if Case.objects.filter(user=self.user, date=self.date, case_ref=case_ref).exists():
+        if Case.objects.filter(user=self.user, date=self.date, case_ref=case_ref).exists()  and not str(case_type) == 'Additional':
             raise forms.ValidationError('You have already logged a case with this reference today.')
 
         return case_ref.upper()

@@ -8,14 +8,14 @@
             also shown for when the case type was added to the database, when it was last modified, who added it to
             the database and who last modified it.</p>
         <br>
-        <h2>Search: <small class=text-muted>[ Department ] [ Task ] [ Minutes ] [ Description ]</small> </h2>
+        <h2>Search/Filter Options: <small class=text-muted>[ Department ] [ Task ] [ Minutes ] [ Description ]</small> </h2>
         <!-- SEARCH BAR -->
         <form>
             <div class="input-group mt-4 mb-3">
                 <input type="search" name="q" class="form-control" placeholder="Search" value="{{ request.GET.q }}"
                     aria-label="Seach" aria-describedby="basic-addon2">
                 <div class="input-group-append">
-                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search mr-2"></i>Search</button>
+                    <button class="btn btn-secondary" type="submit"><i class="fas fa-filter mr-2"></i>Filter</button>
                 </div>
             </div>
         </form>
@@ -27,7 +27,7 @@
 
         <div class="table-responsive">
             <table class="table table-sm table-hover text-nowrap table-bordered table-striped">
-                <thead class="">
+                <thead class="thead-dark">
                     <tr>
                         <th>Department</th>
                         <th>Task</th>
@@ -48,7 +48,7 @@
                         <td>{{ object.department.name }}</td>
                         <td>{{ object.name }}</td>
                         <td class="text-center">{{ object.minutes }}</td>
-                        <td>{% if object.description %}{{ object.description }}{% else %}{% endif %}
+                        <td>{% if object.description %}{{ object.description|truncatechars:"90" }}{% else %}{% endif %}
                         </td>
                         <!-- <td>{{ object.date_created }}</td>
                     <td>{{ object.date_modified}}</td>
