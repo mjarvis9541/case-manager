@@ -13,7 +13,7 @@
                 <h2>Search: <small class=text-muted>[ Staff ID ] [ First Name ] [ Last Name ] </small> </h2>
                 <!-- SEARCH BAR -->
                 <form>
-                    <div class="input-group mt-4 mb-3">
+                    <div class="input-group mt-4 mb-4">
                         <input type="search" name="q" class="form-control" placeholder="Search"
                             value="{{ request.GET.q }}" aria-label="Seach" aria-describedby="basic-addon2">
                         <div class="input-group-append">
@@ -42,16 +42,16 @@
                             <th>Ops Manager</th>
                             <th>Prod Today</th>
                             <th>Prod Week</th> -->
-                                <!-- <th class="text-center">Prod/Today</th>
+                                <!-- <th class="text-right">Prod/Today</th>
                                  -->
-                                <th class="text-center">Mon</th>
-                                <th class="text-center">Tue</th>
-                                <th class="text-center">Wed</th>
-                                <th class="text-center">Thu</th>
-                                <th class="text-center">Fri</th>
-                                <th class="text-center">Sat</th>
-                                <th class="text-center">Sun</th>
-                                <th class="text-center">Total</th>
+                                <th style="width:4%;" class="text-right">Mon</th>
+                                <th style="width:4%;" class="text-right">Tue</th>
+                                <th style="width:4%;" class="text-right">Wed</th>
+                                <th style="width:4%;" class="text-right">Thu</th>
+                                <th style="width:4%;" class="text-right">Fri</th>
+                                <th style="width:4%;" class="text-right">Sat</th>
+                                <th style="width:4%;" class="text-right">Sun</th>
+                                <th style="width:4%;" class="text-right">Total</th>
                                 <th>Log In Time</th>
                                 <th>Log Out</th>
                                 <th>Last Case Ref</th>
@@ -64,17 +64,17 @@
                                 <td><a href="{% url 'prod:tmview' object.id %}">{{ object.username }}</a></td>
                                 <td>{{ object.first_name }}</td>
                                 <td>{{ object.last_name }}</td>
-                                <td>{{ object.email|truncatechars:"15" }}</td>
+                                <td>{{ object.email|truncatechars:"10" }}</td>
                                 <td>{{ object.department.name }}</td>
-                                <!-- <td class="text-center">{% if object.total_prod %}{{ object.total_prod }}{% else %}0{% endif %}</td> -->
-                                <td class="text-center">{% if object.mon_prod %}{{ object.mon_prod }}{% else %}0{% endif %}</td>
-                                <td class="text-center">{% if object.tue_prod %}{{ object.tue_prod }}{% else %}0{% endif %}</td>
-                                <td class="text-center">{% if object.wed_prod %}{{ object.wed_prod }}{% else %}0{% endif %}</td>
-                                <td class="text-center">{% if object.thu_prod %}{{ object.thu_prod }}{% else %}0{% endif %}</td>
-                                <td class="text-center">{% if object.fri_prod %}{{ object.fri_prod }}{% else %}0{% endif %}</td>
-                                <td class="text-center">{% if object.sat_prod %}{{ object.sat_prod }}{% else %}0{% endif %}</td>
-                                <td class="text-center">{% if object.sun_prod %}{{ object.sun_prod }}{% else %}0{% endif %}</td>
-                                <td class="text-center">{% if object.total_week %}{{ object.total_week }}{% else %}0{% endif %}</td>
+                                <!-- <td class="text-right">{% if object.total_prod %}{{ object.total_prod }}{% else %}0{% endif %}</td> -->
+                                <td class="text-right">{% if object.mon_prod %}{{ object.mon_prod|floatformat:"0" }}{% else %}0{% endif %}</td>
+                                <td class="text-right">{% if object.tue_prod %}{{ object.tue_prod|floatformat:"0" }}{% else %}0{% endif %}</td>
+                                <td class="text-right">{% if object.wed_prod %}{{ object.wed_prod|floatformat:"0" }}{% else %}0{% endif %}</td>
+                                <td class="text-right">{% if object.thu_prod %}{{ object.thu_prod|floatformat:"0" }}{% else %}0{% endif %}</td>
+                                <td class="text-right">{% if object.fri_prod %}{{ object.fri_prod|floatformat:"0" }}{% else %}0{% endif %}</td>
+                                <td class="text-right">{% if object.sat_prod %}{{ object.sat_prod|floatformat:"0" }}{% else %}0{% endif %}</td>
+                                <td class="text-right">{% if object.sun_prod %}{{ object.sun_prod|floatformat:"0" }}{% else %}0{% endif %}</td>
+                                <td class="text-right">{% if object.total_week %}{{ object.total_week|floatformat:"0" }}{% else %}0{% endif %}</td>
 
                    
                                 
@@ -109,7 +109,7 @@
                                 href="?page={{ object_list.previous_page_number }}{%if request.GET.q %}&q={{ request.GET.q }}{% endif %}">previous</a>
                             {% endif %}
 
-                            <!-- CENTER -->
+                            <!-- right -->
                             <span class="current">
                                 Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
                             </span>

@@ -141,7 +141,7 @@ def team_list_view(request):
     sun = mon + timedelta(days=6)    
 
     object_list = (
-        User.objects.all()
+        User.objects.all().order_by('-department')
 
         # getting date last case worked
         .annotate(
