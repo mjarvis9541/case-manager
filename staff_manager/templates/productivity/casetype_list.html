@@ -48,7 +48,7 @@
                         <td>{{ object.department.name }}</td>
                         <td>{{ object.name }}</td>
                         <td class="text-center">{{ object.minutes }}</td>
-                        <td>{% if object.description %}{{ object.description|truncatechars:45 }}{% else %}{% endif %}
+                        <td>{% if object.description %}{{ object.description }}{% else %}{% endif %}
                         </td>
                         <!-- <td>{{ object.date_created }}</td>
                     <td>{{ object.date_modified}}</td>

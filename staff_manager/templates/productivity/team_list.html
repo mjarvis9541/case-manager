@@ -28,6 +28,11 @@
                     <table class="table table-sm table-bordered text-nowrap table-hover table-striped">
                         <thead class="text-nowrap ">
                             <tr>
+                                <th colspan="5">Staff Info</th>
+                                <th colspan="8">Production</th>
+                                <th colspan="4">Activity</th>
+                            </tr>
+                            <tr>
                                 <th>Staff ID</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
@@ -73,11 +78,11 @@
 
                    
                                 
-                                <td>{% if object.last_login %}{{ object.last_login|date:"H:i, d/m/y" }}{% else %}{{ object.last_login }}{% endif %}
+                                <td>{% if object.last_login %}{{ object.last_login|date:"d/m/y, H:i" }}{% else %}{{ object.last_login }}{% endif %}
                                 </td>
                                 <td>[ time ]</td>
                                 <td>{{ object.last_case_ref }}</td>
-                                <td>{% if object.last_case %}{{ object.last_case|date:"H:i, d/m/y" }}{% else %}{{ object.last_case }}{% endif %}
+                                <td>{% if object.last_case %}{{ object.last_case|date:"d/m/y, H:i" }}{% else %}{{ object.last_case }}{% endif %}
                                 </td>
                             </tr>
                             {% endfor %}

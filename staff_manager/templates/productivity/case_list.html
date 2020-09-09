@@ -102,7 +102,8 @@
                 <td>{% if object.note %}{{ object.note|truncatechars:45 }}{% else %} {% endif %}</td>
                 <td class="text-center">{{ object.date|date:"" }}</td>
                 <td class="text-center">{{ object.date_created|time:"H:i:s" }}</td>
-                <td class="text-center"><a href="{% url 'prod:delete' object.id %}"><i class="far fa-trash-alt fa-smd text-danger"></i></a></td>
+                <td class="text-center"><a href="{% url 'prod:delete' object.id %}">Delete</a></td>
+                <!-- <td class="text-center"><a href="{% url 'prod:delete' object.id %}"><i class="far fa-trash-alt fa-smd text-danger"></i></a></td> -->
             </tr>
             {% endfor %}
         </table>
