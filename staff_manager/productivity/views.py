@@ -297,7 +297,6 @@ def case_update_view(request, pk=None):
     return render(request, 'productivity/case_form.html', context)
 
 
-
 @login_required
 @staff_member_required
 def csv_export(request):
@@ -321,7 +320,6 @@ def csv_case_type_export(request):
         writer.writerow(x)  
     response['Content-Disposition'] = 'attachment; filename="case-report.csv"'
     return response
-
 
 
 
