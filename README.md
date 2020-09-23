@@ -1,4 +1,4 @@
-# case_manager
+# casemanager
 
 An application to track employee's productivity, workflow, time in the office, log in and log out times, view work stats in real-time, run and download reports to csv.
 
