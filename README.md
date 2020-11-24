@@ -17,5 +17,5 @@ TBC
 
 Template tag filters
 {% if perms.auth.add_something %}
- {{do_smth}}
+ {{ do_something }}
 {% endif %}
